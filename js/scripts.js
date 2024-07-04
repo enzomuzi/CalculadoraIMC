@@ -70,29 +70,29 @@ function createTable(data) {
         div.appendChild(obesity);
 
         imcTable.appendChild(div);
-    })
-}
+    });
+};
+
+function validDigits(text) {
+    return text.replace(/[^0-9,]/g, "");
+};
+
+function calcImc(height, weight) {
+    const imc = (weight / (height * height)).toFixed(1); 
+    return imc;
+};
 
 function cleanInputs() {
     heightInput.value = "";
     weightInput.value = "";
     imcNumber.value = "";
     imcInfo.classList.add("low");
-}
-
-function validDigits(text) {
-    return text.replace(/[^0-9.]/g, "");
-}
-
-function calcImc(weight, height) {
-    const imc = (weight / (height * height)).toFixed(1); 
-    return imc;
-}
+};
 
 function showOrHideResults() {
     calcContainer.classList.toggle("hide")
     resultContainer.classList.toggle("hide")
-}
+};
 
 // Inicialização
     createTable(data);
@@ -115,11 +115,11 @@ calcBtn.addEventListener("click", (e) => {
 
     if (!weight || !height) return;
 
-    const imc = calcImc(weight, height)
-    let info
+    const imc = calcImc(height, weight);
+    let info;
 
     data.forEach((item) => {
-        if(imc >= item.min && img <= item.max) {
+        if (imc >= item.min && imc <= item.max) {
             info = item.info;
         }
     })
@@ -153,7 +153,7 @@ calcBtn.addEventListener("click", (e) => {
     }
 
     showOrHideResults();
-})
+});
 
 clearBtn.addEventListener("click", (e) => {
     e.preventDefault();
@@ -161,7 +161,7 @@ clearBtn.addEventListener("click", (e) => {
     cleanInputs();
 })
 
-backBtn.addEventListener("click", () => {
+backBtn.addEventListener("click", (e) => {
     cleanInputs();
     showOrHideResults();
 })
